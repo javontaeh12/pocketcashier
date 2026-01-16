@@ -1,0 +1,26 @@
+[build]
+command = "npx vite build"
+functions = "netlify/functions"
+publish = "dist"
+
+# Prerender business pages for all requests (bots + browsers)
+# The og-handler will serve metadata and redirect browsers to SPA
+[[redirects]]
+from = "/b/:slug"
+to = "/.netlify/functions/og-handler?slug=:slug"
+status = 200
+force = true
+
+# Also handle legacy /:slug pattern for known crawlers only
+[[redirects]]
+from = "/:slug"
+to = "/.netlify/functions/og-handler?slug=:slug"
+status = 200
+
+[redirects.conditions]
+Header = [ "user-agent", "(?i)(bot|crawler|spider|preview|linkexpand|share|unfurl|facebook|twitter|whatsapp|telegram|slack|discord|linkedin|google|bing|apple|cfnetwork|darwin|message|snapchat|tiktok|instagram|pinterest|reddit|tumblr|skype|teams|wechat|line|viber|signal|validator|embed|thumbnail|curl|wget)" ]
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200

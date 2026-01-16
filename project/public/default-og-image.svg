@@ -1,0 +1,27 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#grad1)"/>
+
+  <circle cx="150" cy="150" r="80" fill="#f97316" opacity="0.2"/>
+  <circle cx="1100" cy="550" r="120" fill="#ea580c" opacity="0.15"/>
+
+  <text x="600" y="250" font-size="72" font-weight="900" text-anchor="middle" fill="white" font-family="system-ui, -apple-system, sans-serif">
+    Pocket Cashier
+  </text>
+
+  <text x="600" y="330" font-size="36" text-anchor="middle" fill="#cbd5e1" font-family="system-ui, -apple-system, sans-serif">
+    Business Suite
+  </text>
+
+  <rect x="300" y="400" width="600" height="3" fill="#f97316"/>
+
+  <text x="600" y="490" font-size="20" text-anchor="middle" fill="#94a3b8" font-family="system-ui, -apple-system, sans-serif">
+    Manage your business all in one place
+  </text>
+</svg>
