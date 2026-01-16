@@ -375,6 +375,18 @@ export function LandingPage() {
               >
                 Terms of Service
               </a>
+              <div className="hidden sm:block w-1 h-1 rounded-full bg-slate-600"></div>
+              <a
+                href="#developer-login"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.hash = 'developer-login';
+                  window.location.reload();
+                }}
+                className="text-sm text-slate-400 hover:text-orange-400 transition"
+              >
+                Developer Sign In
+              </a>
             </div>
             <div className="text-center text-slate-500">
               <p className="font-semibold">&copy; 2025 Pocket Cashier. All rights reserved.</p>
