@@ -38,6 +38,31 @@ export function PublicBusinessPage({ slug, onCheckout }: PublicBusinessPageProps
   useEffect(() => {
     let mounted = true;
 
+    // Helper to check if a string looks like a UUID
+    const isUUID = (str: string) => {
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      return uuidRegex.test(str);
+    };
+
+    // Fallback function to load business directly by ID
+    async function loadBusinessById(businessId: string) {
+      const { data: businessData, error: businessError } = await supabase
+        .from('businesses')
+        .select('id, name, slug, logo_url, is_active, page_description, share_title, share_description, share_image_path, section_display_order')
+        .eq('id', businessId)
+        .maybeSingle();
+
+      if (businessError || !businessData) {
+        return null;
+      }
+
+      if (!businessData.is_active) {
+        return { inactive: true };
+      }
+
+      return businessData;
+    }
+
     async function resolveBusiness() {
       try {
         setLoading(true);
@@ -48,12 +73,44 @@ export function PublicBusinessPage({ slug, onCheckout }: PublicBusinessPageProps
 
         if (rpcError) {
           console.error('Error resolving slug:', rpcError);
+          // Try fallback to direct ID lookup if slug looks like a UUID
+          if (isUUID(slug)) {
+            const businessData = await loadBusinessById(slug);
+            if (!mounted) return; // Exit early if unmounted
+            if (businessData && 'inactive' in businessData) {
+              setError('inactive');
+              setLoading(false);
+              return;
+            }
+            if (businessData) {
+              setBusiness(businessData as BusinessData);
+              setLoading(false);
+              return;
+            }
+          }
+          if (!mounted) return; // Exit early if unmounted
           setError('Unable to load business');
           setLoading(false);
           return;
         }
 
         if (!data || data.length === 0) {
+          // Try fallback to direct ID lookup if slug looks like a UUID
+          if (isUUID(slug)) {
+            const businessData = await loadBusinessById(slug);
+            if (!mounted) return; // Exit early if unmounted
+            if (businessData && 'inactive' in businessData) {
+              setError('inactive');
+              setLoading(false);
+              return;
+            }
+            if (businessData) {
+              setBusiness(businessData as BusinessData);
+              setLoading(false);
+              return;
+            }
+          }
+          if (!mounted) return; // Exit early if unmounted
           setError('not_found');
           setLoading(false);
           return;
