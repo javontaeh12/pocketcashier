@@ -63,6 +63,7 @@ export function SignUpPage() {
             location: formData.location,
             facebook_page_url: formData.facebookPageUrl,
             instagram_page_url: formData.instagramPageUrl,
+            is_active: true,
           })
           .select()
           .single();

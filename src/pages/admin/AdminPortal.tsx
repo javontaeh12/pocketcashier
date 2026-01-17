@@ -54,7 +54,13 @@ export function AdminPortal() {
         setBusinessUrl(`/${data.slug}`);
       } else if (data.url_slug) {
         setBusinessUrl(`/${data.url_slug}`);
+      } else {
+        // Fallback to businessId if no slug is configured
+        setBusinessUrl(`/${businessId}`);
       }
+    } else {
+      // Fallback to businessId if no data found
+      setBusinessUrl(`/${businessId}`);
     }
   };
 

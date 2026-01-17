@@ -126,7 +126,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       } else {
         const { data: newBusiness } = await supabase
           .from('businesses')
-          .insert({ name: 'My Business', user_id: userId })
+          .insert({ name: 'My Business', user_id: userId, is_active: true })
           .select()
           .maybeSingle();
 
